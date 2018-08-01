@@ -91,8 +91,12 @@ function sendFcmMessage(fcmMessage) {
  * Send a notification to followers 3 days before mission expire.
  */
 function startMissionExpirySchedule() {
-  // Run this job every Day at 17:00pm.
-  schedule.scheduleJob({ hour: 17 }, function () {
+  // Run this job every weekday at 5pm.
+  var rule = new schedule.RecurrenceRule();
+  rule.dayOfWeek = new schedule.Range(1, 5);
+  rule.hour = 17;
+  rule.minute = 0;
+  schedule.scheduleJob(rule, function () {
     firebase.database().ref('/missions').once('value', function(snapshots) {
       Object.keys(snapshots.val()).map((key) => {
         const mission = snapshots.val()[key].content;
