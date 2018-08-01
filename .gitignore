@@ -56,6 +56,7 @@ typings/
 
 # dotenv environment variables file
 .env
+service-account.json
 
 # next.js build output
 .next
